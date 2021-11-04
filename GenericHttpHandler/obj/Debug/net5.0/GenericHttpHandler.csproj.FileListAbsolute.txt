@@ -1,0 +1,12 @@
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\bin\Debug\net5.0\GenericHttpHandler.deps.json
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\bin\Debug\net5.0\GenericHttpHandler.dll
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\bin\Debug\net5.0\ref\GenericHttpHandler.dll
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\bin\Debug\net5.0\GenericHttpHandler.pdb
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.csprojAssemblyReference.cache
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.AssemblyInfoInputs.cache
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.AssemblyInfo.cs
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.csproj.CoreCompileInputs.cache
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.dll
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\ref\GenericHttpHandler.dll
+C:\Users\fsoto\source\repos\DotNetCore-GenericHttpHandler\GenericHttpHandler\obj\Debug\net5.0\GenericHttpHandler.pdb
