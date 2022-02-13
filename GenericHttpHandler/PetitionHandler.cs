@@ -17,6 +17,8 @@ namespace GenericHttpHandler
         {
             this.Data = data;
         }
+        public string AppCode { get; set; }
+        public string Password { get; set; }
         [Required(ErrorMessage = "Debe proveer los datos de la petición")]
         public T Data { get; set; }
         public DateTime ReceivedDate { get; set; } = DateTime.Now;
