@@ -6,7 +6,7 @@ using System.Net;
 
 namespace GenericHttpHandler
 {
-    public class ResponseHandler<T> where T: class
+      public class ResponseHandler<T> where T: class
     {
         public ResponseHandler()
         {
@@ -18,6 +18,8 @@ namespace GenericHttpHandler
         public ResponseHandler(T obj = null, IEnumerable<T> data = null, MessageHandler messageHandler = null, 
             ErrorHandler errorHandler = null)
         {
+            //AppCode = appCode;
+
             if (obj != null)
                 Data = new List<T> { obj };
             else
@@ -37,6 +39,10 @@ namespace GenericHttpHandler
 
             Count =  DataCount;
         }
+        public ResponseHandler(List<ErrorHandler> errorHandler = null)
+        {
+            Errors = errorHandler;
+        }
         public List<T> Data { get; set; }
         public List<ErrorHandler> Errors  { get; set; }
         public List<MessageHandler> Messages  { get; set; }
@@ -45,24 +51,36 @@ namespace GenericHttpHandler
         public bool IsSuccessStatusCode { get; set; }
         public int? DataCount { get=> Data?.Count; }
         public int? Count { get; set; }
-
         #region Bad Request
-        public static BadRequestObjectResult BadRequest(T obj, string statusError, string message, string stackTrace = null, string description = null)
+        public static BadRequestObjectResult BadRequest(T obj,string statusError,string message,string stackTrace=null,string description=null)
         {
             ResponseHandler<T> response = new(obj, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
+            response.IsSuccessStatusCode = false;
+            response.StatusCode = HttpStatusCode.BadRequest;
             return new BadRequestObjectResult(response);
         }
-        public static BadRequestObjectResult BadRequest(IEnumerable<T> data, string statusError, string message, string stackTrace = null, string description = null)
+        public static BadRequestObjectResult BadRequest(IEnumerable<T> data, string statusError, string message, string stackTrace=null, string description = null)
         {
             ResponseHandler<T> response = new(null, data, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
+            response.IsSuccessStatusCode = false;
+            response.StatusCode = HttpStatusCode.BadRequest;
             return new BadRequestObjectResult(response);
         }
-        public static BadRequestObjectResult BadRequest(string statusError, string message, string stackTrace = null, string description = null)
+        public static BadRequestObjectResult BadRequest(string statusError, string message, string stackTrace=null, string description = null)
         {
             ResponseHandler<T> response = new(null, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
+            response.IsSuccessStatusCode = false;
+            response.StatusCode = HttpStatusCode.BadRequest;
+            return new BadRequestObjectResult(response);
+        }
+        public static BadRequestObjectResult BadRequest(List<ErrorHandler> errors)
+        {
+            ResponseHandler<T> response = new(errors);
+            response.IsSuccessStatusCode = false;
+            response.StatusCode = HttpStatusCode.BadRequest;
             return new BadRequestObjectResult(response);
         }
         #endregion
@@ -71,12 +89,12 @@ namespace GenericHttpHandler
         public static UnauthorizedObjectResult Unauthorized(string statusError, string message, string stackTrace = null, string description = null)
         {
             ResponseHandler<T> response = new(null, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.Unauthorized;
             response.IsSuccessStatusCode = false;
             return new UnauthorizedObjectResult(response);
         }
-
+       
         public static UnauthorizedObjectResult Unauthorized()
         {
             ResponseHandler<T> response = new(null, null, null,
@@ -96,7 +114,7 @@ namespace GenericHttpHandler
             response.IsSuccessStatusCode = true;
             return new OkObjectResult(response);
         }
-        public static OkObjectResult Ok(T obj, string statusMessage = "OK", string message = null, string description = null)
+        public static OkObjectResult Ok(T obj, string statusMessage="OK", string message=null, string description = null)
         {
             ResponseHandler<T> response = new(obj, null,
                 new MessageHandler(statusMessage, message, description));
@@ -123,10 +141,10 @@ namespace GenericHttpHandler
         #endregion
 
         #region Not Found
-        public static NotFoundObjectResult NotFound(T obj = null, string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
+        public static NotFoundObjectResult NotFound(T obj=null,string statusError = "No Encontrado", string message = null, string stackTrace=null,string description = null)
         {
-            ResponseHandler<T> response = new(obj, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+            ResponseHandler<T> response = new(obj, null,null,
+                new ErrorHandler( statusError, message,stackTrace, description));
             response.StatusCode = HttpStatusCode.NotFound;
             response.IsSuccessStatusCode = false;
             return new NotFoundObjectResult(response);
@@ -134,15 +152,15 @@ namespace GenericHttpHandler
         public static NotFoundObjectResult NotFound(IEnumerable<T> data = null, string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
         {
             ResponseHandler<T> response = new(null, data, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.NotFound;
             response.IsSuccessStatusCode = false;
             return new NotFoundObjectResult(response);
         }
-        public static NotFoundObjectResult NotFound(string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
+        public static NotFoundObjectResult NotFound(string statusError = "No Encontrado", string message = null, string stackTrace=null, string description = null)
         {
             ResponseHandler<T> response = new(null, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.NotFound;
             response.IsSuccessStatusCode = false;
             return new NotFoundObjectResult(response);
@@ -153,7 +171,7 @@ namespace GenericHttpHandler
         public static UnprocessableEntityObjectResult UnprocessableEntity(T obj = null, string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
         {
             ResponseHandler<T> response = new(obj, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.UnprocessableEntity;
             response.IsSuccessStatusCode = false;
             return new UnprocessableEntityObjectResult(response);
@@ -161,7 +179,7 @@ namespace GenericHttpHandler
         public static UnprocessableEntityObjectResult UnprocessableEntity(IEnumerable<T> data = null, string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
         {
             ResponseHandler<T> response = new(null, data, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.UnprocessableEntity;
             response.IsSuccessStatusCode = false;
             return new UnprocessableEntityObjectResult(response);
@@ -169,7 +187,7 @@ namespace GenericHttpHandler
         public static UnprocessableEntityObjectResult UnprocessableEntity(string statusError = "No Encontrado", string message = null, string stackTrace = null, string description = null)
         {
             ResponseHandler<T> response = new(null, null, null,
-                new ErrorHandler(statusError, message, stackTrace, description));
+                new ErrorHandler( statusError, message, stackTrace, description));
             response.StatusCode = HttpStatusCode.UnprocessableEntity;
             response.IsSuccessStatusCode = false;
             return new UnprocessableEntityObjectResult(response);
@@ -184,9 +202,11 @@ namespace GenericHttpHandler
 
         #endregion
 
-        #region Internal Server Error
 
-        public static InternalServerErrorObjectResult InternalServerError(string statusError = "Internal Server Error", string message = null, string stackTrace = null, string description = null)
+
+        #region Internal Server Error
+       
+        public static InternalServerErrorObjectResult InternalServerError(string statusError="Internal Server Error", string message=null,string stackTrace=null,string description=null)
         {
             ResponseHandler<T> response = new(null, null, null,
                 new ErrorHandler(statusError, message, stackTrace, description));
